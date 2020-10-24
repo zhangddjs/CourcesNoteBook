@@ -1,0 +1,78 @@
+\clearpage\section{索引}
+
+\subsection{模型-题型}
+
+  \paragraph{初等模型}~{最优方案问题(连续)、平衡问题}
+  \paragraph{军事模型}~{平衡问题、胜负问题}
+  \paragraph{随机决策模型}~{最优方案问题、生产者消费者问题}
+
+\subsection{模型-方法}
+
+  \paragraph{初等模型}~{条件假设、建立坐标系、函数假设、列表格对比、优先队列、求交点、$\theta$方法、$Q$值方法}
+  \paragraph{军事模型}~{条件假设、建立坐标系、建立微分方程组、函数假设、递归枚举所有情况、求交点、求平衡解、相轨线变化规律、平衡点稳定性分析}
+  \paragraph{随机决策模型}~{风险决策准则、不确定型决策准则、$M/M/1$系统、$M/M/S$系统}
+
+\subsection{题型-模型}
+
+  \paragraph{平衡问题}~{初等模型、军事模型}
+  \paragraph{胜负问题}~{军事模型}
+  \paragraph{最优方案问题(连续)}~{初等模型、随机决策模型}
+  \paragraph{最优方案问题(离散)}~{随机决策模型}
+  \paragraph{生产者消费者问题}~{随机决策模型}
+
+\subsection{数据预处理}
+
+  \paragraph{处理不良数据}~{}
+
+  \begin{enumerate}
+    \item 不符合实际的明显错误数据直接剔除
+    \item 对某些异常值数据视为缺失值处理（插补或剔除）
+    \item 对时间不连续的数据可以通过设置间隔时间阈值进行数据插补
+    \item 数值转换—>时间数据转换为毫秒，等级数据转化为离散等级值
+  \end{enumerate}
+
+  \paragraph{插补（修改）方法}~{}
+
+  \begin{enumerate}
+    \item 拉格朗日插值法
+    \item 平均、同类均值
+    \item 中位数
+    \item 众数
+    \item 极大似然估计
+    \item 多重插补
+    \item 移动平滑、指数平滑
+    \item Smoothed z-score（在一段历史序列中，用平均值和方差对下个节点进行预测）
+  \end{enumerate}
+
+  \paragraph{数据区域划分:更好的区分不同区域数据的影响}~{}
+
+\subsection{根据题意做出合理假设}
+
+\subsection{建立模型与求解}
+
+  \paragraph{特征选择}~{}
+
+  \begin{enumerate}
+    \item PCA降维
+    \item LDA降维
+    \item 皮尔森相关系数
+    \item 特征组合
+  \end{enumerate}
+
+  \paragraph{预测模型（D/E）}~{}
+
+  \begin{enumerate}
+    \item 随机森林回归
+    \item 多元线性回归
+    \item ARIMA自回归时间序列预测模型
+    \item 基于prophet的时间序列预测模型
+  \end{enumerate}
+
+  \paragraph{分类模型}~{}
+
+  \begin{enumerate}
+    \item 决策树（二分类）
+    \item 逻辑回归（二分类）
+    \item SVM（多分类，常用）
+    \item KNN（多分类）
+  \end{enumerate}

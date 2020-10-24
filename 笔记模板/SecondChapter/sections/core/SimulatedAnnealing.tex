@@ -1,0 +1,82 @@
+\subsection{模拟退火算法}
+
+\paragraph{概述}~{}
+
+以一定概率接受领域内次优解、随接受概率温度系数慢慢下降，有可能跳出局部最优。
+
+\textbf{搜索算法：}盲目搜索还是启发式搜索？
+
+按照预定的控制策略实行搜索，在搜索过程中获取的中间信息不用来改进控制策略，成为盲目搜索，反之称为启发式搜索。
+
+\textbf{盲目搜索：}DFS、BFS、代价优先、向前、向后、双向。。。
+
+\textbf{启发式搜索：}爬山法、\textbf{模拟退火法(SA)}、\textbf{遗传算法(GA)}、\textbf{粒子群算法}、禁忌搜索法(TS)。。。
+
+\textbf{爬山法：}爬山法在贪心法的基础上新解数量从一个变成多个，能够\textbf{快速收敛于局部最优解}。但是遇到\textbf{平台}则无以是从，对初始解\textbf{敏感}，容易\textbf{陷入}局部最优。
+
+\textbf{模拟退火法：}
+
+物理退火过程：粒子状态 \rightarrow 能量最低态 \rightarrow 加温过程 \rightarrow 等温过程 \rightarrow 冷却(退火)过程 \rightarrow 能量
+
+模拟退火过程：解 \rightarrow 最优解 \rightarrow 设定初温(加温) \rightarrow Metropolis采样过程(等温) \rightarrow 控制参数的下降(冷却) \rightarrow 目标函数
+
+优点是原理简单，计算速度快。
+
+\paragraph{应用场景}~{}
+
+求组合优化问题、求函数最优解问题。例如TSP问题、调度问题。
+
+这类问题在找全局最优解时需要彻底搜索整个可行域，同时对于某些情况有大量可行解。
+
+\paragraph{算法}~{}
+
+模拟退火算法如算法\ref{algo:simulatedannealing}所示。
+
+\begin{algorithm}[htb]
+  \small
+  \SetAlgoLined
+  \KwData{数据集}
+  \KwResult{最优点}
+
+  随机产生一个初始解$x_0$，令$x_{best}=x_0$，并计算目标函数值$E(x_0)$\;
+  设置初始温度$T(0)=T_0$，迭代次数$i=1$\;
+  \While{$T(i)>T_{min}$}{
+    \For{$j=1\sim{}k$}{
+        对当前最优解$x_{best}$按照某一邻域函数，产生一个新解$x_{new}$。计算新的目标函数值$E(x_{new})$，并计算目标函数值的增量$\Delta{E}=E(x_{new})-E(x_{best})$\;
+        \lIf{$\Delta{E}<0$}{$x_{best}=x_{new}$}
+        \If{$\Delta{E}>0$}{
+            $p=exp(-\Delta{E}/T(i))$\;
+            \leIf{$c=random[0,1]<p$}{$x_{best}=x_{new}$}{$x_{best}=x_{best}$}
+        }
+    }
+  }
+  输出当前最优点，计算结束\;
+
+  \caption{模拟退火算法}
+  \label{algo:simulatedannealing}
+\end{algorithm}
+
+\paragraph{要素}~{}
+
+\begin{enumerate}
+    \item 状态空间与状态产生函数(邻域函数)
+    \item 状态转移概率(接受概率)$p$：$x_{old}$向$x_{new}$转移的概率。采用\textbf{Metropolis准则}
+    $$p=\left\{\begin{matrix}
+        1 & if & E(x_{new})<E(x_{old}) \\ 
+        exp(-\frac{E(x_{new})-E(x_{old})}{T}) & if & E(x_{new})\geq{}E(x_{old})
+      \end{matrix}\right.$$
+    \item 冷却进度表T(t)，经典方式为$T(t)=\frac{T_0}{\lg(1+t)}$，快速方式为$T(t)=\frac{T_0}{1+t}$。这两种方式都可以收敛于全局最小点。
+    \item 初始温度$T_0$，初温越大，获得高质量解概率越大，计算量越大。确定方式主要有三种。
+    \item 内循环终止准则(Metropolis抽样稳定准则)，决定各温度下产生候选解的数目，常用的有三种。
+    \item 外循环终止准则，常用的有四种
+\end{enumerate}
+
+\paragraph{优化}~{}
+
+\begin{enumerate}
+    \item \textbf{增加升温或重升温过程。}(避免在局部最小解停滞不前)
+    \item \textbf{增加记忆功能。}(避免由于执行概率接受环节而遗失当前遇到的最优解，记录Best So Far状态)
+    \item \textbf{增加补充搜索过程。}(退火结束后以当前最优解为初始状态再搜索一次)
+    \item 对每一当前状态采用多次搜索策略，以概率接受区域内的最优状态。
+    \item 结合其它搜索算法，如遗传、混沌等。
+\end{enumerate}
